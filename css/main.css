@@ -19,7 +19,7 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: content-box;
+    box-sizing: border-box;
     font-family: 'Marcellus SC', 'Helvetica Neue', Helvetica, Arial, serif;
 }
 
@@ -27,6 +27,7 @@ html, body {
     color: white;
     background-color: #000000;
     width: 100%;
+    max-width: 100%;
     overflow-x: hidden;
     margin: 0;
     padding: 0;
@@ -206,6 +207,139 @@ h1.hb {
     font-size: 1.1em;
 }
 
+/* News Section Styles */
+.news-section {
+    padding: 10px;
+}
+
+.news-item {
+    background: linear-gradient(135deg, rgba(35, 47, 62, 0.6), rgba(44, 62, 80, 0.6));
+    border-left: 4px solid #FF9900;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.news-item:hover {
+    background: linear-gradient(135deg, rgba(35, 47, 62, 0.8), rgba(44, 62, 80, 0.8));
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(255, 153, 0, 0.2);
+}
+
+.news-item h3 {
+    color: #FF9900;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.news-date {
+    color: #aaa;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.news-item p {
+    line-height: 1.6;
+    margin: 5px 0;
+}
+
+.news-item a {
+    color: #FF9900;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.news-item a:hover {
+    text-decoration: underline;
+}
+
+/* Events Page Styles */
+.events-page {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Community Days Horizontal Cards */
+.community-days-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.community-day-card {
+    background: linear-gradient(135deg, rgba(35, 47, 62, 0.9), rgba(44, 62, 80, 0.9));
+    border: 2px solid rgba(255, 153, 0, 0.3);
+    border-radius: 12px;
+    padding: 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
+.community-day-card:hover {
+    transform: translateY(-5px);
+    border-color: #FF9900;
+    box-shadow: 0 8px 16px rgba(255, 153, 0, 0.2);
+}
+
+.community-day-content h2 {
+    color: #FF9900;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 153, 0, 0.3);
+}
+
+.community-day-content p {
+    line-height: 1.6;
+}
+
+.community-day-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.community-day-content ul li {
+    margin: 10px 0;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.6;
+}
+
+.community-day-content ul li:before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: #FF9900;
+    font-weight: bold;
+}
+
+.community-day-content a {
+    color: #FF9900;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.community-day-content a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .community-day-card {
+        padding: 20px;
+    }
+    
+    .community-day-content h2 {
+        font-size: 1.4rem;
+    }
+}
+
 .resources-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -353,26 +487,32 @@ h1.hb {
     display: flex;
     margin: 10px;
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .left {
     flex: 1;
     background-color: var(--background-color);
-    font-size: clamp(8px, 6vw, 16px);
+    font-size: clamp(12px, 2vw, 16px);
     padding-right: 12px;
+    min-width: 0;
 }
 
 .middle {
     flex: 2;
     background-color: var(--background-color);
-    font-size: clamp(8px, 6vw, 16px);
+    font-size: clamp(12px, 2vw, 16px);
+    min-width: 0;
 }
 
 .right {
-    flex: 0.5; /* Make right column half the width of left column */
+    flex: 0.5;
     background-color: var(--background-color);
-    font-size: clamp(8px, 6vw, 16px);
+    font-size: clamp(12px, 2vw, 16px);
     padding-left: 12px;
+    min-width: 0;
 }
 
 /* links */
@@ -565,29 +705,32 @@ a:visited {
 }
 
 /* Media Queries for different screen sizes - Responsive Layout */
+
+/* Tablet and below (iPad and smaller) */
 @media screen and (max-width: 1110px) {
     .title-bar {
-        flex-direction: column;
-        padding: 10px;
-        min-height: auto;
+        flex-direction: row;
+        padding: 10px 15px;
+        min-height: 70px;
     }
 
     .title-bar-logo {
-        flex: 1;
-        width: 100%;
-        justify-content: center;
-        padding: 10px 0;
+        flex: 0 0 40%;
+        padding-right: 15px;
+    }
+    
+    .title-bar-logo img {
+        max-height: 60px;
     }
 
     .title-bar-menu {
-        width: 100%;
-        justify-content: center;
+        flex: 1;
+        justify-content: flex-end;
     }
 
     .title-bar-menu nav {
         gap: 15px;
         flex-wrap: wrap;
-        justify-content: center;
     }
 
     .title-bar-menu nav a {
@@ -596,28 +739,32 @@ a:visited {
     }
 
     .container {
-        overflow: auto;
         flex-direction: column;
-        height: 500px;
+        margin: 5px;
+        overflow: visible;
     }
-
-    .right{
+    
+    .left, .middle, .right {
         flex: 1;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
     }
 
     .calendar-container {
-        grid-template-columns: repeat(4, minmax(80px, 1fr)); /* Adjust to four columns on smaller screens */
+        grid-template-columns: repeat(4, minmax(80px, 1fr));
     }
 
-    .header-bar-content{
+    .header-bar-content {
         flex-direction: column;
     }
+    
     .presenter-image {
         height: auto; 
         width: 100vw;
         align-content: center;
         justify-content: center;
-        padding:5px;
+        padding: 5px;
     }
 
     h1.hb {
@@ -628,15 +775,117 @@ a:visited {
         align-content: center;
         justify-content: center;
     }
+    
+    .resources-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+    
+    .discord-widget {
+        min-width: 100%;
+        width: 100%;
+    }
 }
-@media (max-width: 480px) {
+
+/* Mobile phones (iPhone and similar) */
+@media (max-width: 768px) {
+    html {
+        font-size: 16pt;
+    }
+    
+    .title-bar {
+        flex-direction: column;
+        padding: 10px;
+        min-height: auto;
+        align-items: center;
+    }
+
+    .title-bar-logo {
+        flex: 1;
+        width: 100%;
+        justify-content: center;
+        padding: 10px 0;
+        text-align: center;
+    }
+    
+    .title-bar-logo img {
+        max-height: 50px;
+    }
+
+    .title-bar-menu {
+        width: 100%;
+        justify-content: center;
+    }
+
     .title-bar-menu nav {
         gap: 10px;
+        justify-content: center;
+        width: 100%;
     }
 
     .title-bar-menu nav a {
         font-size: 12px;
-        padding: 5px 10px;
+        padding: 5px 8px;
+    }
+    
+    .container {
+        margin: 5px;
+    }
+    
+    .left, .middle, .right {
+        padding: 5px;
+    }
+    
+    h1 {
+        font-size: clamp(16px, 5vw, 20px);
+    }
+    
+    h2 {
+        font-size: clamp(14px, 4vw, 18px);
+    }
+    
+    .circle-image {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .discord-link {
+        font-size: 0.9rem;
+    }
+    
+    .resources-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .resource-card {
+        padding: 15px;
+    }
+    
+    .resource-card h2 {
+        font-size: 1.1rem;
+    }
+    
+    .swagimage {
+        max-width: 200px;
+        max-height: 200px;
+    }
+    
+    .discord-widget {
+        min-width: 100%;
+        min-height: 400px;
+    }
+}
+
+/* Small mobile phones */
+@media (max-width: 480px) {
+    .title-bar-menu nav {
+        gap: 8px;
+    }
+
+    .title-bar-menu nav a {
+        font-size: 11px;
+        padding: 4px 6px;
     }
 
     .container {
@@ -644,22 +893,212 @@ a:visited {
     }
 
     .calendar-container {
-      grid-template-columns: repeat(2, minmax(100px, 1fr)); /* Stack items more compactly */
+        grid-template-columns: repeat(2, minmax(100px, 1fr));
     }
-    .header-bar-content{
+    
+    .header-bar-content {
         flex-direction: column;
     }
+    
     .presenter-column-1,
     .presenter-column-2,
     .presenter-column-3 {
-        flex: 1 1 100%; /* Each column takes full width on very small screens */
+        flex: 1 1 100%;
     }
+    
     .header-bar {
         display: block;
-        /* Base layout */
         min-width: 320px;
         max-height: 20vh;
-        height: 20vh; /* Set height based on viewport height for flexible scaling */
+        height: 20vh;
+    }
+    
+    .resource-card ul li {
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    .circle-image {
+        width: 60px;
+        height: 60px;
+    }
+}
 
+/* About Page Submenu Styles */
+.about-submenu {
+    background: linear-gradient(135deg, rgba(35, 47, 62, 0.9), rgba(44, 62, 80, 0.9));
+    border: 2px solid rgba(255, 153, 0, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.about-submenu h3 {
+    color: #FF9900;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 153, 0, 0.3);
+}
+
+.about-submenu nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.about-submenu nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.about-submenu nav a:hover {
+    background-color: rgba(255, 153, 0, 0.2);
+    transform: translateX(5px);
+    color: #FF9900;
+}
+
+.about-submenu nav a.active {
+    background-color: #FF9900;
+    color: #232F3E;
+    font-weight: bold;
+}
+
+#about-content {
+    min-height: 400px;
+}
+
+/* Mobile adjustments for about submenu */
+@media (max-width: 768px) {
+    .about-submenu {
+        padding: 15px;
+    }
+    
+    .about-submenu h3 {
+        font-size: 1.1rem;
+    }
+    
+    .about-submenu nav a {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* About Page Left Column - Narrower than default */
+.about-left {
+    flex: 0.5;
+    background-color: var(--background-color);
+    font-size: clamp(12px, 2vw, 16px);
+    padding-right: 12px;
+    min-width: 0;
+}
+
+@media (max-width: 768px) {
+    .about-left {
+        flex: 1;
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 20px;
+    }
+}
+
+/* Committee Members Grid */
+.committee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.committee-card {
+    background: linear-gradient(135deg, rgba(35, 47, 62, 0.9), rgba(44, 62, 80, 0.9));
+    border: 2px solid rgba(255, 153, 0, 0.3);
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.committee-card:hover {
+    transform: translateY(-8px);
+    border-color: #FF9900;
+    box-shadow: 0 8px 20px rgba(255, 153, 0, 0.3);
+}
+
+.committee-photo {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #FF9900;
+    box-shadow: 0 4px 12px rgba(255, 153, 0, 0.4);
+    position: relative;
+}
+
+.committee-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.committee-card:hover .committee-photo img {
+    transform: scale(1.1);
+}
+
+.committee-info {
+    margin-top: 15px;
+}
+
+.committee-name {
+    color: #FF9900;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.committee-role {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+/* Mobile adjustments for committee grid */
+@media (max-width: 768px) {
+    .committee-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    
+    .committee-card {
+        padding: 20px;
+    }
+    
+    .committee-photo {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .committee-name {
+        font-size: 1rem;
+    }
+    
+    .committee-role {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .committee-grid {
+        grid-template-columns: 1fr;
     }
 }

@@ -48,7 +48,20 @@ class Router {
         // Get route from hash, default to /home
         let route = window.location.hash.slice(1) || '/home';
         
-        const contentFile = this.routes[route];
+        // Check if route starts with /about, /meetups, or /communitydays (for sub-pages)
+        let contentFile;
+        if (route.startsWith('/about')) {
+            contentFile = this.routes['/about'];
+            route = '/about'; // Normalize for nav highlighting
+        } else if (route.startsWith('/meetups')) {
+            contentFile = this.routes['/meetups'];
+            route = '/meetups'; // Normalize for nav highlighting
+        } else if (route.startsWith('/communitydays')) {
+            contentFile = this.routes['/communitydays'];
+            route = '/communitydays'; // Normalize for nav highlighting
+        } else {
+            contentFile = this.routes[route];
+        }
         
         if (contentFile) {
             try {
@@ -126,6 +139,27 @@ class Router {
                 console.error('Calendar class not loaded yet');
             }
         }
+        
+        // Trigger about sub-router if on about page
+        const aboutContent = document.getElementById('about-content');
+        if (aboutContent && window.aboutRouter) {
+            window.aboutRouter.reset();
+            window.aboutRouter.init();
+        }
+        
+        // Trigger meetups sub-router if on meetups page
+        const meetupsContent = document.getElementById('meetups-content');
+        if (meetupsContent && window.meetupsRouter) {
+            window.meetupsRouter.reset();
+            window.meetupsRouter.init();
+        }
+        
+        // Trigger community days sub-router if on community days page
+        const communityDaysContent = document.getElementById('communitydays-content');
+        if (communityDaysContent && window.communityDaysRouter) {
+            window.communityDaysRouter.reset();
+            window.communityDaysRouter.init();
+        }
     }
 }
 
@@ -135,8 +169,9 @@ const router = new Router();
 // Register routes
 router.register('/home', 'content/home.html');
 router.register('/about', 'content/about.html');
+router.register('/events', 'content/events.html');
 router.register('/meetups', 'content/meetups.html');
 router.register('/resources', 'content/resources.html');
-router.register('/community', 'content/community.html');
+router.register('/communitydays', 'content/communitydays.html');
 router.register('/sponsors', 'content/sponsors.html');
 

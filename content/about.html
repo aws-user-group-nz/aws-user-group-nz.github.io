@@ -1,24 +1,124 @@
-<div class="middle">
-    <center><hr width="50%"></center>
-    <center><h1>About AWSUG Aotearoa</h1></center>
-    <center><hr width="50%"></center>
-    <br />
-    <p>AWSUG Aotearoa (AWS User Group Aotearoa) is New Zealand's premier community for AWS enthusiasts, professionals, and learners.</p>
-    <br />
-    <h2>Our Mission</h2>
-    <p>We bring together cloud professionals, developers, architects, and enthusiasts to share knowledge, learn from each other, and grow the AWS community across Aotearoa New Zealand.</p>
-    <br />
-    <h2>What We Do</h2>
-    <ul style="margin-left: 40px;">
-        <li>Host regular meetups and events across New Zealand</li>
-        <li>Provide a platform for knowledge sharing and networking</li>
-        <li>Connect members with AWS experts and community leaders</li>
-        <li>Support learning and professional development</li>
-        <li>Foster collaboration and innovation in cloud technologies</li>
-    </ul>
-    <br />
-    <h2>Get Involved</h2>
-    <p>Whether you're just starting your cloud journey or you're a seasoned AWS professional, there's a place for you in our community. Join our Discord server, attend a meetup, or even become a presenter!</p>
-    <br />
-    <p>Everyone is welcome - from lurkers to active contributors. We're all in this together.</p>
+<div class="about-left">
+    <div class="about-submenu">
+        <h3>About</h3>
+        <nav>
+            <a href="#/about/overview" data-about-route="/overview" class="about-nav-link">Overview</a><br />
+            <a href="#/about/committee" data-about-route="/committee" class="about-nav-link">Committee</a><br />
+            <a href="#/about/meetup-leaders" data-about-route="/meetup-leaders" class="about-nav-link">Meetup Leaders</a><br />
+            <a href="#/about/history" data-about-route="/history" class="about-nav-link">Our History</a><br />
+            <a href="#/about/ourconstitution" data-about-route="/ourconstitution" class="about-nav-link">Our Constitution</a><br />
+            <a href="#/about/ourregulations" data-about-route="/ourregulations" class="about-nav-link">Our Regulations</a><br />
+            <a href="#/about/codeofconduct" data-about-route="/codeofconduct" class="about-nav-link">Our Code of Conduct</a><br />
+        </nav>
+    </div>
 </div>
+
+<div class="middle">
+    <div id="about-content">
+        <!-- Sub-page content will be loaded here -->
+    </div>
+</div>
+<div class="right">
+
+</div>
+
+<script>
+// About page sub-router
+(function() {
+    const aboutRoutes = {
+        '/overview': 'content/about/overview.html',
+        '/committee': 'content/about/committee.html',
+        '/meetup-leaders': 'content/about/meetup-leaders.html',
+        '/history': 'content/about/history.html',
+        '/ourconstitution': 'content/about/ourconstitution.html',
+        '/ourregulations': 'content/about/ourregulations.html',
+        '/codeofconduction': 'content/about/codeofconduction.html'
+    };
+    
+    let initialized = false;
+    
+    function initAboutRouter() {
+        if (initialized) return;
+        
+        const aboutContainer = document.getElementById('about-content');
+        
+        if (!aboutContainer) {
+            console.error('About content container not found');
+            return;
+        }
+        
+        initialized = true;
+        
+        async function loadAboutSubPage(subRoute) {
+            const contentFile = aboutRoutes[subRoute];
+            
+            if (contentFile) {
+                try {
+                    const response = await fetch(contentFile);
+                    if (response.ok) {
+                        const content = await response.text();
+                        aboutContainer.innerHTML = content;
+                        updateActiveAboutNav(subRoute);
+                    } else {
+                        aboutContainer.innerHTML = '<p>Content not found</p>';
+                    }
+                } catch (error) {
+                    console.error('Error loading about sub-page:', error);
+                    aboutContainer.innerHTML = '<p>Error loading content</p>';
+                }
+            }
+        }
+        
+        function updateActiveAboutNav(subRoute) {
+            document.querySelectorAll('.about-nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeLink = document.querySelector(`[data-about-route="${subRoute}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+        
+        function handleAboutNavigation() {
+            const hash = window.location.hash;
+            
+            // Check if we're on an about sub-page
+            if (hash.startsWith('#/about/')) {
+                const subRoute = hash.replace('#/about', '');
+                loadAboutSubPage(subRoute);
+            } else if (hash === '#/about' || hash === '') {
+                // Default to overview
+                loadAboutSubPage('/overview');
+            }
+        }
+        
+        // Listen for hash changes
+        window.addEventListener('hashchange', handleAboutNavigation);
+        
+        // Handle clicks on about nav links
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('[data-about-route]')) {
+                e.preventDefault();
+                const subRoute = e.target.getAttribute('data-about-route');
+                window.location.hash = `/about${subRoute}`;
+            }
+        });
+        
+        // Load initial sub-page
+        handleAboutNavigation();
+    }
+    
+    // Listen for the custom event from main router
+    window.addEventListener('aboutPageLoaded', initAboutRouter);
+    
+    // Also try to initialize immediately in case we're already on the page
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initAboutRouter, 50);
+        });
+    } else {
+        setTimeout(initAboutRouter, 50);
+    }
+})();
+</script>
