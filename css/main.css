@@ -1,0 +1,419 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #FF9900;
+    --secondary-color-dark: #E88B00;
+    --background-color: #000000;
+    --text-color: #2c3e50;
+    --border-color: #dcdde1;
+    --hover-color: #c0af7f;
+    --mobile-breakpoint: 768px;
+    --small-mobile-breakpoint: 480px;
+    --modal-bg: #2a2a2a;
+    --modal-header-bg: #3a3a3a;
+    --modal-text: #ffffff;
+    --modal-shadow: rgba(0, 0, 0, 0.3);
+    --modal-border: rgba(255, 255, 255, 0.1);
+    --modal-close-hover: #ff4444;    
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+    font-family: 'Marcellus SC', 'Helvetica Neue', Helvetica, Arial, serif;
+}
+
+html, body {
+    color: white;
+    background-color: #000000;
+    width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+html {
+    font-size: 18pt;
+}
+
+body {
+    font-size: 1rem;
+}
+
+p {
+    white-space: normal;
+}
+.marcellus-sc-regular {
+    font-family: "Marcellus SC", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+/* headers */
+h1 {
+    font-family: 'Marcellus SC', 'Helvetica Neue', Helvetica, Arial, serif;
+    color: white;
+    font-weight: bolder;
+    font-size: clamp(14px, 6vw, 24px);
+}
+
+h2{
+    font-family: 'Marcellus SC', 'Helvetica Neue', Helvetica, Arial, serif;
+    color: white;
+    font-weight: bold;
+    font-size: clamp(12px, 6vw, 22px);
+}
+
+h3{
+    font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+    color: #CCCCCC;
+    font-weight: normal;
+    font-size: clamp(8px, 6vw, 18px);
+}
+
+/* delete this eventually */
+h1.hb {
+    font-family: 'Marcellus SC', 'Helvetica Neue', Helvetica, Arial, serif;
+    color: rgb(255, 254, 254);
+    font-weight: bolder;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+/* Header Bar Styles */
+.header-bar {
+    display: block;
+    /* Base layout */
+    min-width: 320px;
+    max-height: 30vh;
+    height: 30vh; /* Set height based on viewport height for flexible scaling */
+    margin: 5px;
+
+    /* Prevent overflow */
+    overflow: hidden;
+
+    /* Content alignment */
+    align-items: center;
+
+    /* Background styling */
+    background-color: #000000;
+    background-image: linear-gradient(rgba(15, 11, 11, 0.339), rgba(83, 81, 81, 0.762)), url("../images/awsbuilders.kiwi.original.1024x1024.jpg");
+    background-size: cover;
+    background-position: 75% 60%;
+    background-repeat: no-repeat;
+}
+
+.header-bar-content {
+    display: flex;
+    position: relative;
+    flex-direction: column; /* Stack items vertically */
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.logo-image {
+    width: 100%; /* Make image width match container width */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 100%; /* Prevents image from exceeding container width */
+}
+
+.presenter-image {
+    height: 80%; 
+    align-content: center;
+    justify-content: center;
+    padding:5px;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    margin: 10px;
+    overflow: hidden;
+}
+
+.left {
+    flex: 1;
+    background-color: var(--background-color);
+    font-size: clamp(8px, 6vw, 16px);
+    padding-right: 12px;
+}
+
+.middle {
+    flex: 2;
+    background-color: var(--background-color);
+    font-size: clamp(8px, 6vw, 16px);
+}
+
+.right {
+    flex: 0.5; /* Make right column half the width of left column */
+    background-color: var(--background-color);
+    font-size: clamp(8px, 6vw, 16px);
+    padding-left: 12px;
+}
+
+/* links */
+a {
+    color: white;
+}
+
+a:visited {
+    color: white;
+}
+
+/* images */
+.swagimage {
+    border-radius: 10%;
+    transition: transform 0.3s ease;
+    max-width: 300px;
+    max-height: 300px;
+    justify-content: center;
+    align-items: center;
+}
+
+.discordinviteimage {
+    transition: transform 0.3s ease;
+    max-width: 100vw;
+    max-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+/* MODALS */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.modal-body {
+    padding: 1rem;
+}
+
+.modal-header {
+    display: flex;
+    max-width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    position: sticky;
+    top: 0;
+    background: white;
+    padding: 1rem;
+    z-index: 1;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-content {
+    background: rgb(255, 255, 255);
+    margin: 5vh auto;
+    padding: 1rem;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    color: black;
+}
+
+/* discord widget */
+    .discord-widget {
+    /*min-width: 5vw;
+    max-width: 10vw;
+    height: 500;*/
+    min-width: 300px;
+    min-height: 600px;
+    justify-content: center;
+    align-items: center;
+    /* max-width: 250px; */
+}
+
+.circle-image {
+    width: 100px;  /* Adjust size as needed */
+    height: 100px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    margin: 20px;
+}
+
+.circle-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+}
+
+/* Glowing effect */
+.circle-image::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(45deg, 
+        #FF9900, /* AWS Orange */
+        #232F3E, /* AWS Navy */
+        #FF9900, 
+        #232F3E
+    );
+    z-index: 0;
+    animation: glow 3s linear infinite;
+}
+
+/* Sparkle overlay */
+.circle-image::after {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle at 50% 50%, 
+        rgba(255,255,255,0.8) 2%, 
+        transparent 6%),
+        radial-gradient(circle at 20% 20%, 
+        rgba(255,255,255,0.8) 1%, 
+        transparent 4%),
+        radial-gradient(circle at 80% 80%, 
+        rgba(255,255,255,0.8) 1%, 
+        transparent 4%);
+    animation: sparkle 2s ease-in-out infinite;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Animations */
+@keyframes glow {
+    0% {
+        transform: rotate(0deg) scale(1.1);
+    }
+    100% {
+        transform: rotate(360deg) scale(1.1);
+    }
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+/* Optional hover effect */
+.circle-image:hover::before {
+    animation: glow 1.5s linear infinite;
+}
+
+.circle-image:hover img {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.errorModal {
+    display: none;
+}
+.error-area {
+    margin-top: 20px;
+    padding: 10px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+}
+
+.error-area:empty {
+    display: none;
+}
+
+/* Media Queries for different screen sizes - Responsive Layout */
+@media screen and (max-width: 1110px) {
+    .container {
+        overflow: auto;
+        flex-direction: column;
+        height: 500px;
+    }
+
+    .right{
+        flex: 1;
+    }
+
+    .calendar-container {
+        grid-template-columns: repeat(4, minmax(80px, 1fr)); /* Adjust to four columns on smaller screens */
+    }
+
+    .header-bar-content{
+        flex-direction: column;
+    }
+    .presenter-image {
+        height: auto; 
+        width: 100vw;
+        align-content: center;
+        justify-content: center;
+        padding:5px;
+    }
+
+    h1.hb {
+        font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+        color: rgb(255, 254, 254);
+        font-weight: bolder;
+        font-size: 1rem;
+        align-content: center;
+        justify-content: center;
+    }
+}
+@media (max-width: 480px) {
+    .container {
+        overflow: auto;
+    }
+
+    .calendar-container {
+      grid-template-columns: repeat(2, minmax(100px, 1fr)); /* Stack items more compactly */
+    }
+    .header-bar-content{
+        flex-direction: column;
+    }
+    .presenter-column-1,
+    .presenter-column-2,
+    .presenter-column-3 {
+        flex: 1 1 100%; /* Each column takes full width on very small screens */
+    }
+    .header-bar {
+        display: block;
+        /* Base layout */
+        min-width: 320px;
+        max-height: 20vh;
+        height: 20vh; /* Set height based on viewport height for flexible scaling */
+
+    }
+}
