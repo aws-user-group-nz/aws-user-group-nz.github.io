@@ -151,35 +151,99 @@ h1.hb {
 }
 
 /* Sponsors Section Styles */
-.sponsors-section {
-    margin: 30px 0;
-    padding: 20px;
+.sponsor-tier {
+    margin: 40px 0;
+}
+
+.sponsor-tier h2 {
+    color: #FF9900;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
     text-align: center;
 }
 
-.sponsors-section h2 {
-    margin-bottom: 20px;
-    color: #FF9900;
+.sponsor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.sponsor-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 0.95));
+    border: 2px solid rgba(255, 153, 0, 0.3);
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+
+.sponsor-card:hover {
+    transform: translateY(-8px);
+    border-color: #FF9900;
+    box-shadow: 0 8px 20px rgba(255, 153, 0, 0.3);
 }
 
 .sponsor-logo {
-    display: inline-block;
-    margin: 20px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-}
-
-.sponsor-logo:hover {
-    transform: scale(1.05);
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
 }
 
 .sponsor-logo img {
-    max-width: 300px;
-    max-height: 150px;
+    max-width: 100%;
+    max-height: 100%;
     width: auto;
     height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.sponsor-card:hover .sponsor-logo img {
+    transform: scale(1.05);
+}
+
+.sponsor-info h3 {
+    color: #232F3E;
+    font-size: 1.2rem;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Mobile adjustments for sponsor grid */
+@media (max-width: 768px) {
+    .sponsor-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+    
+    .sponsor-card {
+        padding: 20px;
+        min-height: 180px;
+    }
+    
+    .sponsor-logo {
+        height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sponsor-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .sponsor-tier h2 {
+        font-size: 1.2rem;
+    }
 }
 
 /* Resources Page Styles */
@@ -486,17 +550,18 @@ h1.hb {
 .container {
     display: flex;
     margin: 10px;
-    overflow: hidden;
+    padding: 0 10px;
+    overflow: visible;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    gap: 20px;
 }
 
 .left {
     flex: 1;
     background-color: var(--background-color);
     font-size: clamp(12px, 2vw, 16px);
-    padding-right: 12px;
     min-width: 0;
 }
 
@@ -508,11 +573,12 @@ h1.hb {
 }
 
 .right {
-    flex: 0.5;
+    flex: 1;
     background-color: var(--background-color);
     font-size: clamp(12px, 2vw, 16px);
-    padding-left: 12px;
-    min-width: 0;
+    min-width: 320px;
+    overflow: visible;
+    padding-right: 10px;
 }
 
 /* links */
@@ -593,11 +659,11 @@ a:visited {
     /*min-width: 5vw;
     max-width: 10vw;
     height: 500;*/
-    min-width: 300px;
+    width: 100%;
+    max-width: 350px;
     min-height: 600px;
     justify-content: center;
     align-items: center;
-    /* max-width: 250px; */
 }
 
 .circle-image {
@@ -944,7 +1010,7 @@ a:visited {
 .about-submenu nav {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 1px;
 }
 
 .about-submenu nav a {

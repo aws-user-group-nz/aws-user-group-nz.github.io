@@ -8,7 +8,7 @@ class AboutRouter {
             '/history': 'content/about/history.html',
             '/ourconstitution': 'content/about/ourconstitution.html',
             '/ourregulations': 'content/about/ourregulations.html',
-            '/codeofconduction': 'content/about/codeofconduction.html'
+            '/codeofconduct': 'content/about/codeofconduct.html'
         };
         this.container = null;
         this.initialized = false;
