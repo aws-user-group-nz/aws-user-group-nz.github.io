@@ -81,6 +81,214 @@ h1.hb {
     text-align: center;
 }
 
+/* Title Bar Styles */
+.title-bar {
+    display: flex;
+    align-items: center;
+    background-color: #232F3E; /* AWS Navy */
+    padding: 10px 20px;
+    border-bottom: 3px solid #FF9900; /* AWS Orange accent */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    min-height: 60px;
+}
+
+.title-bar-logo {
+    flex: 0 0 33.333%; /* One third width */
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.title-bar-logo img {
+    max-height: 80px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+.title-bar-menu {
+    flex: 1; /* Takes remaining space (two thirds) */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.title-bar-menu nav {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.title-bar-menu nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.title-bar-menu nav a:hover {
+    background-color: #FF9900;
+    color: #232F3E;
+}
+
+.title-bar-menu nav a:visited {
+    color: white;
+}
+
+.title-bar-menu nav a:hover:visited {
+    color: #232F3E;
+}
+
+.title-bar-menu nav a.active {
+    background-color: #FF9900;
+    color: #232F3E;
+}
+
+/* Sponsors Section Styles */
+.sponsors-section {
+    margin: 30px 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.sponsors-section h2 {
+    margin-bottom: 20px;
+    color: #FF9900;
+}
+
+.sponsor-logo {
+    display: inline-block;
+    margin: 20px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.sponsor-logo:hover {
+    transform: scale(1.05);
+}
+
+.sponsor-logo img {
+    max-width: 300px;
+    max-height: 150px;
+    width: auto;
+    height: auto;
+}
+
+/* Resources Page Styles */
+.resources-page {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Discord Link */
+.discord-link {
+    color: #5865F2;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.discord-link:hover {
+    color: #FF9900;
+    text-decoration: underline;
+}
+
+.discord-link i {
+    margin-right: 8px;
+    font-size: 1.1em;
+}
+
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.resource-card {
+    background: linear-gradient(135deg, rgba(35, 47, 62, 0.9), rgba(44, 62, 80, 0.9));
+    border: 2px solid rgba(255, 153, 0, 0.3);
+    border-radius: 12px;
+    padding: 25px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.resource-card:hover {
+    transform: translateY(-5px);
+    border-color: #FF9900;
+    box-shadow: 0 8px 16px rgba(255, 153, 0, 0.2);
+}
+
+.resource-card h2 {
+    color: #FF9900;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 153, 0, 0.3);
+}
+
+.resource-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.resource-card ul li {
+    margin: 12px 0;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.6;
+}
+
+.resource-card ul li:before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: #FF9900;
+    font-weight: bold;
+}
+
+.resource-card a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.resource-card a:hover {
+    color: #FF9900;
+    text-decoration: underline;
+}
+
+.resource-link-separator {
+    color: #FF9900;
+    margin: 0 8px;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .resources-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .resource-card {
+        padding: 20px;
+    }
+    
+    .resource-card h2 {
+        font-size: 1.2rem;
+    }
+}
+
 /* Header Bar Styles */
 .header-bar {
     display: block;
@@ -98,9 +306,9 @@ h1.hb {
 
     /* Background styling */
     background-color: #000000;
-    background-image: linear-gradient(rgba(15, 11, 11, 0.339), rgba(83, 81, 81, 0.762)), url("../images/awsbuilders.kiwi.original.1024x1024.jpg");
+    background-image: linear-gradient(rgba(15, 11, 11, 0.7), rgba(30, 30, 30, 0.8));
     background-size: cover;
-    background-position: 75% 60%;
+    background-position: center;
     background-repeat: no-repeat;
 }
 
@@ -358,6 +566,35 @@ a:visited {
 
 /* Media Queries for different screen sizes - Responsive Layout */
 @media screen and (max-width: 1110px) {
+    .title-bar {
+        flex-direction: column;
+        padding: 10px;
+        min-height: auto;
+    }
+
+    .title-bar-logo {
+        flex: 1;
+        width: 100%;
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    .title-bar-menu {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .title-bar-menu nav {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .title-bar-menu nav a {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
     .container {
         overflow: auto;
         flex-direction: column;
@@ -393,6 +630,15 @@ a:visited {
     }
 }
 @media (max-width: 480px) {
+    .title-bar-menu nav {
+        gap: 10px;
+    }
+
+    .title-bar-menu nav a {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
     .container {
         overflow: auto;
     }

@@ -1,6 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
-    calendar = new Calendar();
-});
+// Calendar will be initialized by router when home content loads
+// No auto-initialization needed
 
 class Calendar {
     constructor() {
@@ -80,8 +79,16 @@ class Calendar {
     }
 
     addEventListeners() {
-        document.getElementById('prevMonth').addEventListener('click', () => this.navigateMonth(-1));
-        document.getElementById('nextMonth').addEventListener('click', () => this.navigateMonth(1));
+        const prevBtn = document.getElementById('prevMonth');
+        const nextBtn = document.getElementById('nextMonth');
+        
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => this.navigateMonth(-1));
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => this.navigateMonth(1));
+        }
+        
         this.closeButtons.forEach(btn => {
             btn.addEventListener('click', () => this.closeModals());
         });
@@ -96,11 +103,13 @@ class Calendar {
             }
         });
         this.modals.forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    this.closeModals();
-                }
-            });
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        this.closeModals();
+                    }
+                });
+            }
         });
     }
 
