@@ -1556,3 +1556,144 @@ a:visited {
         font-size: 0.9rem;
     }
 }
+
+/* Sponsors Carousel Styles */
+.sponsors-carousel-container {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 0.95));
+    border: 2px solid rgba(255, 153, 0, 0.3);
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.sponsors-carousel {
+    display: flex;
+    animation: carousel-scroll 30s linear infinite;
+}
+
+.sponsors-carousel:hover {
+    animation-play-state: paused;
+}
+
+.sponsor-slide {
+    flex: 0 0 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    padding-top: 50px;
+    min-height: 120px;
+    position: relative;
+}
+
+.sponsor-level-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 8px 0;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-align: center;
+    z-index: 10;
+    border-radius: 10px 10px 0 0;
+}
+
+.sponsor-level-badge.platinum {
+    background: linear-gradient(135deg, #E5E4E2, #BCC6CC);
+    color: #2c3e50;
+}
+
+.sponsor-level-badge.gold {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #2c3e50;
+}
+
+.sponsor-level-badge.silver {
+    background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
+    color: #2c3e50;
+}
+
+.sponsor-level-badge.bronze {
+    background: linear-gradient(135deg, #CD7F32, #B87333);
+    color: #ffffff;
+}
+
+.sponsor-slide img {
+    max-width: 80%;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(1);
+    transition: all 0.3s ease;
+}
+
+.sponsor-slide img:hover {
+    filter: brightness(1.2);
+    transform: scale(1.05);
+}
+
+@keyframes carousel-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    14% {
+        transform: translateX(0);
+    }
+    16.66% {
+        transform: translateX(-100%);
+    }
+    30.66% {
+        transform: translateX(-100%);
+    }
+    33.33% {
+        transform: translateX(-200%);
+    }
+    47.33% {
+        transform: translateX(-200%);
+    }
+    50% {
+        transform: translateX(-300%);
+    }
+    64% {
+        transform: translateX(-300%);
+    }
+    66.66% {
+        transform: translateX(-400%);
+    }
+    80.66% {
+        transform: translateX(-400%);
+    }
+    83.33% {
+        transform: translateX(-500%);
+    }
+    97.33% {
+        transform: translateX(-500%);
+    }
+    100% {
+        transform: translateX(-600%);
+    }
+}
+
+/* Mobile adjustments for sponsors carousel */
+@media (max-width: 768px) {
+    .sponsors-carousel-container {
+        max-width: 100%;
+    }
+    
+    .sponsor-slide {
+        min-height: 100px;
+    }
+    
+    .sponsor-slide img {
+        max-height: 80px;
+    }
+}
