@@ -1697,15 +1697,3 @@ a:visited {
 .merch-section {
     display: none !important;
 }
-
-/* Hide event calendar navigation link */
-nav a[href="#/events"][data-route="/events"] {
-    display: none !important;
-}
-
-/* Hide event calendar page while under development */
-.events-page,
-.calendar-container,
-.calendar-grid {
-    display: none !important;
-}

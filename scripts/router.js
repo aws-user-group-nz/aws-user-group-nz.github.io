@@ -131,9 +131,10 @@ class Router {
         
         // Re-initialize calendar if it exists in the loaded content
         const calendarGrid = document.querySelector('.calendar-grid');
-        if (calendarGrid && !window.calendar) {
+        if (calendarGrid) {
             // Check if Calendar class is available
             if (typeof Calendar !== 'undefined') {
+                // Always create a new calendar instance when the events page loads
                 window.calendar = new Calendar();
             } else {
                 console.error('Calendar class not loaded yet');
