@@ -115,7 +115,7 @@ class Calendar {
 
     async fetchDiscordEvents() {
         try {
-            const response = await fetch('https://0m9a7ez6c7.execute-api.ap-southeast-2.amazonaws.com');
+            const response = await fetch('https://qhh1yazige.execute-api.ap-southeast-2.amazonaws.com');
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -145,7 +145,7 @@ class Calendar {
 
     async fetchAWSTwitchChannelEvents() {
         try {
-            const response = await fetch('https://yfvi2fka8g.execute-api.ap-southeast-2.amazonaws.com');
+            const response = await fetch('https://zfajs2uwoj.execute-api.ap-southeast-2.amazonaws.com');
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
