@@ -98,16 +98,15 @@ class Router {
     }
     
     updateActiveNav(route) {
-        // Remove active class from all nav links
-        document.querySelectorAll('.title-bar-menu nav a').forEach(link => {
+        // Remove active class from all nav links (desktop and mobile)
+        document.querySelectorAll('.nav-menu a, .nav-mobile-menu a').forEach(link => {
             link.classList.remove('active');
         });
         
-        // Add active class to current route
-        const activeLink = document.querySelector(`[data-route="${route}"]`);
-        if (activeLink) {
+        // Add active class to current route (both desktop and mobile menus)
+        document.querySelectorAll(`[data-route="${route}"]`).forEach(activeLink => {
             activeLink.classList.add('active');
-        }
+        });
     }
     
     initializeContentScripts() {
