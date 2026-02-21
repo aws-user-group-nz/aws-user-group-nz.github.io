@@ -131,6 +131,7 @@ html {
 body {
     font-size: 1rem;
     padding-top: 110px; /* Fallback before JS measures actual header height */
+    padding-bottom: 70px; /* Fallback before JS measures actual footer height */
 }
 
 p {
@@ -187,7 +188,9 @@ h1.hb {
     right: 0;
     z-index: 1000;
     min-height: 64px;
-    overflow: visible;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
     width: 100%;
     box-sizing: border-box;
     gap: 20px;
@@ -195,12 +198,12 @@ h1.hb {
 }
 
 .title-bar-logo {
-    flex: 0 1 auto;
+    flex: 0 0 520px;
     display: flex;
     align-items: center;
     gap: 10px;
-    flex-shrink: 1;
-    min-width: 0;
+    padding-right: 50px;
+    margin-right: 30px;
     color: #ffffff !important; /* Ensure all text in logo area is white */
 }
 
@@ -216,11 +219,10 @@ h1.hb {
 }
 
 .title-bar-logo > *:not(a):not(img) {
-    flex: 1 0 auto;
+    flex: 1 0 280px;
     font-size: 0.85rem;
     line-height: 1.4;
     white-space: nowrap;
-    min-width: 0;
     color: #ffffff !important; /* Always white regardless of theme */
 }
 
@@ -261,39 +263,34 @@ h1.hb {
 }
 
 .title-bar-menu {
-    flex: 1 1 auto;
+    flex: 1 0 auto;
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    min-width: 0;
-    overflow: visible;
+    margin-left: 50px;
 }
 
 .nav-menu-wrapper {
     display: flex;
     align-items: center;
-    min-width: 0;
-    overflow: visible;
 }
 
 .nav-menu {
     display: flex;
-    gap: clamp(2px, 0.8vw, 20px);
+    gap: 20px;
     align-items: center;
-    flex-shrink: 1;
-    min-width: 0;
+    flex-shrink: 0;
 }
 
 .nav-menu a {
     color: var(--nav-link);
     text-decoration: none;
-    font-size: clamp(12px, 1.1vw, 15px);
+    font-size: 16px;
     font-weight: 500;
-    padding: clamp(6px, 0.5vw, 8px) clamp(6px, 0.8vw, 14px);
+    padding: 8px 12px;
     border-radius: 4px;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     white-space: nowrap;
-    flex-shrink: 0;
 }
 
 .nav-menu a:hover {
@@ -314,12 +311,9 @@ h1.hb {
     color: var(--nav-link-active-color);
 }
 
-/* Social Media Icons in Title Bar */
+/* Social Media Icons in Title Bar - Hidden (moved to footer) */
 .title-bar .social-icons {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    flex-shrink: 0;
+    display: none;
 }
 
 .title-bar .social-icons a {
@@ -377,6 +371,140 @@ h1.hb {
     background-color: rgba(255, 153, 0, 0.15);
     color: #FF9900;
     transform: scale(1.08);
+}
+
+/* Site Footer */
+.site-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--nav-bg);
+    border-top: 1px solid var(--nav-border);
+    padding: 12px 24px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: auto;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.footer-social-icons {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0;
+}
+
+.footer-social-icons a {
+    color: white;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    position: relative;
+    text-decoration: none;
+}
+
+.footer-social-icons a::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 3px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.footer-social-icons a:hover::after {
+    opacity: 1;
+}
+
+/* Facebook - Blue */
+.footer-social-icons a[href*="facebook"] {
+    color: #1877F2 !important;
+}
+
+.footer-social-icons a[href*="facebook"]::after {
+    background-color: #1877F2;
+}
+
+.footer-social-icons a[href*="facebook"]:hover {
+    background-color: rgba(24, 119, 242, 0.15);
+    color: #1877F2 !important;
+    transform: scale(1.1);
+}
+
+/* LinkedIn - Blue */
+.footer-social-icons a[href*="linkedin"] {
+    color: #0077B5 !important;
+}
+
+.footer-social-icons a[href*="linkedin"]::after {
+    background-color: #0077B5;
+}
+
+.footer-social-icons a[href*="linkedin"]:hover {
+    background-color: rgba(0, 119, 181, 0.15);
+    color: #0077B5 !important;
+    transform: scale(1.1);
+}
+
+/* YouTube - Red */
+.footer-social-icons a[href*="youtube"] {
+    color: #FF0000 !important;
+}
+
+.footer-social-icons a[href*="youtube"]::after {
+    background-color: #FF0000;
+}
+
+.footer-social-icons a[href*="youtube"]:hover {
+    background-color: rgba(255, 0, 0, 0.15);
+    color: #FF0000 !important;
+    transform: scale(1.1);
+}
+
+/* Email - Orange accent */
+.footer-social-icons a[href^="mailto:"] {
+    color: #FF9900 !important;
+}
+
+.footer-social-icons a[href^="mailto:"]::after {
+    background-color: #FF9900;
+}
+
+.footer-social-icons a[href^="mailto:"]:hover {
+    background-color: rgba(255, 153, 0, 0.15);
+    color: #FF9900 !important;
+    transform: scale(1.1);
+}
+
+.footer-social-icons a:visited {
+    color: inherit;
+}
+
+.footer-social-icons a:hover:visited {
+    color: inherit;
+}
+
+/* Media query to move social icons down on smaller screens */
+@media (max-width: 1200px) {
+    .title-bar {
+        flex-wrap: wrap;
+        min-height: auto;
+    }
 }
 
 /* ── Theme Toggle Button ── */

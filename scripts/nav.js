@@ -11,7 +11,7 @@ class NavigationHandler {
         this.navMenuItems = document.querySelectorAll('.nav-menu a');
         this.titleBar = document.querySelector('.title-bar');
         this.titleBarLogo = document.querySelector('.title-bar-logo');
-        this.socialIcons = document.querySelector('.social-icons');
+        this.footer = document.querySelector('.site-footer');
         this.isMobile = window.innerWidth < 768;
         this.mobileMenuOpen = false;
         
@@ -94,6 +94,10 @@ class NavigationHandler {
         if (this.titleBar) {
             const headerHeight = this.titleBar.getBoundingClientRect().height;
             document.body.style.paddingTop = headerHeight + 'px';
+        }
+        if (this.footer) {
+            const footerHeight = this.footer.getBoundingClientRect().height;
+            document.body.style.paddingBottom = footerHeight + 'px';
         }
     }
 
