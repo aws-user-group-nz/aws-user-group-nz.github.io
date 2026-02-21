@@ -24,32 +24,63 @@
             AWS Aotearoa User Groups<br />Incorporated Society
         </div>
 
+        <!-- Burger Menu Button (mobile only) -->
+        <button class="nav-burger" aria-label="Toggle menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Desktop Menu -->
         <div class="title-bar-menu">
-            <nav>
-                <a href="#/home" data-route="/home">Home</a>
-                <a href="#/about" data-route="/about">About Us</a>
-                <a href="#/meetups" data-route="/meetups">Meetups</a>
-                <a href="#/communitydays" data-route="/communitydays">Community Days</a>
-                <a href="#/sponsors" data-route="/sponsors">Sponsors</a>
-                <a href="#/events" data-route="/events">Live Event Cal</a>
-                <a href="#/resources" data-route="/resources">Resources</a>
-            </nav>
+            <div class="nav-menu-wrapper">
+                <nav class="nav-menu">
+                    <a href="#/home" data-route="/home">Home</a>
+                    <a href="#/about" data-route="/about">About Us</a>
+                    <a href="#/meetups" data-route="/meetups">Meetups</a>
+                    <a href="#/communitydays" data-route="/communitydays">Community Days</a>
+                    <a href="#/sponsors" data-route="/sponsors">Sponsors</a>
+                    <a href="#/events" data-route="/events">Live Event Cal</a>
+                    <a href="#/resources" data-route="/resources">Resources</a>
+                </nav>
+            </div>
         </div>
         
-        <div class="social-icons">
-            <a href="https://www.facebook.com/awsugnz" target="_blank" rel="noopener noreferrer" title="Facebook">
-                <i class="fab fa-facebook"></i>
-            </a>
-            <a href="https://www.linkedin.com/company/aws-user-group-aotearoa/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="https://www.youtube.com/channel/UCMCXyTTzLSRL2CMwffKdegw" target="_blank" rel="noopener noreferrer" title="YouTube">
-                <i class="fab fa-youtube"></i>
-            </a>
-            <a href="mailto:enquiries@awsug.nz" title="Email Us">
-                <i class="fas fa-envelope"></i>
-            </a>
-        </div>
+
+        <!-- Dark/Light Mode Toggle -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
+            <span class="icon-sun"><i class="fas fa-sun"></i></span>
+        </button>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="nav-mobile-overlay">
+        <nav class="nav-mobile-menu">
+            <a href="#/home" data-route="/home">Home</a>
+            <a href="#/about" data-route="/about">About Us</a>
+            <a href="#/meetups" data-route="/meetups">Meetups</a>
+            <a href="#/communitydays" data-route="/communitydays">Community Days</a>
+            <a href="#/sponsors" data-route="/sponsors">Sponsors</a>
+            <a href="#/events" data-route="/events">Live Event Cal</a>
+            <a href="#/resources" data-route="/resources">Resources</a>
+            <div class="nav-mobile-social">
+                <a href="https://www.facebook.com/awsugnz" target="_blank" rel="noopener noreferrer" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.linkedin.com/company/aws-user-group-aotearoa/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://www.youtube.com/channel/UCMCXyTTzLSRL2CMwffKdegw" target="_blank" rel="noopener noreferrer" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="mailto:enquiries@awsug.nz" title="Email Us">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <button class="theme-toggle mobile-theme-toggle" id="themeToggleMobile" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
+                    <span class="icon-sun"><i class="fas fa-sun"></i></span>
+                </button>
+            </div>
+        </nav>
     </div>
 
     <!-- Dynamic Content Container -->
@@ -109,7 +140,25 @@
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-social-icons">
+            <a href="https://www.facebook.com/awsugnz" target="_blank" rel="noopener noreferrer" title="Facebook">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://www.linkedin.com/company/aws-user-group-aotearoa/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UCMCXyTTzLSRL2CMwffKdegw" target="_blank" rel="noopener noreferrer" title="YouTube">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="mailto:enquiries@awsug.nz" title="Email Us">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+    </footer>
 
+    <script src="scripts/nav.js"></script>
     <script src="scripts/router.js"></script>
     <script src="scripts/about_router.js"></script>
     <script src="scripts/meetups_router.js"></script>
