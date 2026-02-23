@@ -1735,7 +1735,7 @@ a:visited {
     transition: all 0.2s ease;
     background: var(--body-bg-alt);
     border: 1px solid var(--card-border);
-    font-size: 12px !important;
+    font-size: 13px !important;
 }
 
 .sidebar-menu nav a:hover {
@@ -1781,7 +1781,7 @@ a:visited {
 
 .cta-card p {
     color: var(--body-text-muted);
-    font-size: 12px !important;
+    font-size: 13px !important;
     line-height: 1.5;
     margin-bottom: 10px;
 }
@@ -1811,7 +1811,7 @@ a:visited {
 
 .section-heading {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
-    font-size: clamp(12px, 1.3vw, 14px) !important;
+    font-size: clamp(12px, 1.2vw, 15px) !important;
     font-weight: 700 !important;
     color: var(--body-text) !important;
     margin-bottom: 16px;
@@ -1831,6 +1831,35 @@ a:visited {
     border-radius: 2px;
 }
 
+/* Home page: column background and title format (match About-style — orange title, muted orange line)
+   #page-content scope ensures these apply when content is loaded dynamically */
+#page-content .home-page .hp-column-left,
+#page-content .home-page .hp-column-center,
+#page-content .home-page .hp-column-right,
+.home-page .hp-column-left,
+.home-page .hp-column-center,
+.home-page .hp-column-right {
+    background: #1a1a2e;
+}
+
+#page-content .home-page .section-heading,
+.home-page .section-heading {
+    color: #FF9900 !important;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    font-size: clamp(14px, 1.6vw, 17px) !important;
+    font-weight: 800;
+    display: block;
+    width: 100%;
+    padding-bottom: 6px;
+    margin-bottom: 16px;
+    border-bottom: 2px solid rgba(255, 153, 0, 0.3);
+}
+
+#page-content .home-page .section-heading::after,
+.home-page .section-heading::after {
+    display: none;
+}
+
 .section-title {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
     font-size: clamp(12px, 1.5vw, 14px) !important;
@@ -1845,7 +1874,7 @@ a:visited {
 
 .content-section p {
     color: var(--body-text-muted);
-    font-size: 12px !important;
+    font-size: 14px !important;
     line-height: 1.5;
     margin-bottom: 6px;
 }
@@ -1854,7 +1883,7 @@ a:visited {
     margin: 12px 0 12px 40px;
     padding: 0;
     color: var(--body-text-muted);
-    font-size: 12px !important;
+    font-size: 14px !important;
     line-height: 1.6;
 }
 
@@ -1875,7 +1904,7 @@ a:visited {
 }
 
 .content-intro {
-    font-size: 12px !important;
+    font-size: 14px !important;
     color: var(--body-text-muted);
     line-height: 1.5;
     margin-bottom: 18px;
@@ -1883,7 +1912,7 @@ a:visited {
 
 .cta-text {
     color: var(--body-text-muted);
-    font-size: 12px !important;
+    font-size: 14px !important;
     line-height: 1.5;
     margin-top: 16px;
 }
@@ -1907,10 +1936,13 @@ a:visited {
 
 /* ── Card Modifiers ── */
 
-.card-news h3 {
+.card-news h3,
+.card-news .card-news-title,
+#page-content .home-page .card-news h3,
+#page-content .home-page .card-news .card-news-title {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
     color: var(--body-text) !important;
-    font-size: 0.8rem !important;
+    font-size: 16px !important;
     font-weight: 700;
     margin: 0;
     line-height: 1.3;
@@ -1918,7 +1950,7 @@ a:visited {
 
 .card-news > p {
     color: var(--card-text) !important;
-    font-size: 0.75rem !important;
+    font-size: 14px !important;
     line-height: 1.5;
     text-align: left !important;
     margin: 0;
@@ -2013,7 +2045,7 @@ a:visited {
     display: inline-block;
     padding: 3px 10px;
     border-radius: 20px;
-    font-size: 0.65rem;
+    font-size: 10px;
     font-weight: 700;
     background: rgba(255, 153, 0, 0.15);
     color: #FF9900;
@@ -2034,7 +2066,7 @@ a:visited {
 .link-button {
     color: #FF9900;
     text-decoration: none;
-    font-size: 0.8rem;
+    font-size: 11px;
     font-weight: 600;
     padding: 10px 14px;
     background: var(--card-bg);
@@ -2093,11 +2125,11 @@ a:visited {
     }
     
     .page-title {
-        font-size: 13px !important;
+        font-size: 14px !important;
     }
     
     .section-title {
-        font-size: 12px !important;
+        font-size: 14px !important;
     }
 }
 
@@ -2188,13 +2220,13 @@ a:visited {
 }
 
 .hp-discord-main {
-    font-size: 0.9rem;
+    font-size: 12px;
     font-weight: 700;
     text-align: left;
 }
 
 .hp-discord-sub {
-    font-size: 0.7rem;
+    font-size: 10px;
     opacity: 0.85;
     text-align: left;
 }
@@ -2208,6 +2240,9 @@ a:visited {
 .hp-discord-widget {
     display: flex;
     justify-content: center;
+    /* Shrink iframe so Discord widget text appears smaller (iframe content not styleable) */
+    transform: scale(0.85);
+    transform-origin: top center;
 }
 
 .hp-discord-widget iframe {
@@ -2231,7 +2266,7 @@ a:visited {
 
 
 .hp-news-date {
-    font-size: 0.65rem;
+    font-size: 14px;
     color: var(--card-date-color);
     margin-top: auto;
     padding-top: 10px;
@@ -2382,11 +2417,51 @@ a:visited {
     justify-items: center;
 }
 
-/* Center sponsor grids on sponsors page when there are few items */
+/* Sponsors page only: max 2 per row, cards do NOT fill row — same scale as home page (320px) */
 .content-wrapper .hp-sponsors-grid {
-    max-width: 600px;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+    gap: 20px;
+}
+
+/* One sponsor only: center it */
+.content-wrapper .hp-sponsors-grid:has(.hp-sponsor-card:only-child) {
+    display: flex;
+    justify-content: center;
+}
+
+/* Two (or more) per row: left card right-aligned, right card left-aligned so they sit side by side toward center */
+.content-wrapper .hp-sponsors-grid .hp-sponsor-card:nth-child(odd) {
+    justify-self: end;
+}
+
+.content-wrapper .hp-sponsors-grid .hp-sponsor-card:nth-child(even) {
+    justify-self: start;
+}
+
+/* Sponsors page only: all cards same size as Platinum (fixed 320px) so every tier looks equal */
+.content-wrapper .sponsor-tier-card .hp-sponsor-card {
+    width: 320px;
+    max-width: 320px;
+    min-width: 320px;
+    padding: 24px 20px 20px;
+    min-height: 140px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+}
+
+/* Logo size similar to home carousel: contained, not stretched */
+.content-wrapper .sponsor-tier-card .hp-sponsor-card img {
+    max-width: 80%;
+    max-height: 80px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    margin-top: 18px;
 }
 
 .hp-sponsor-card {
@@ -2443,13 +2518,17 @@ a:visited {
     color: #2c3e50;
 }
 
+/* Logo keeps aspect ratio: cap size so it never fills/stretches in the card */
 .hp-sponsor-card img {
-    max-width: 80%;
-    max-height: 45px;
+    display: block;
+    max-width: 200px;
+    max-height: 70px;
     width: auto;
     height: auto;
     object-fit: contain;
+    object-position: center;
     margin-top: 18px;
+    flex-shrink: 0;
     filter: brightness(0.95);
     transition: all 0.3s ease;
 }
@@ -2471,6 +2550,77 @@ a:visited {
     margin-top: 8px;
 }
 
+/* Home page: Quick Links larger and more prominent (dark containers, orange text, more padding/spacing) */
+#page-content .home-page .hp-quicklinks-list,
+.home-page .hp-quicklinks-list {
+    gap: 14px;
+    margin-top: 12px;
+}
+
+#page-content .home-page .hp-quicklinks-list .link-button,
+.home-page .hp-quicklinks-list .link-button {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 14px 18px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    color: #FF9900;
+}
+
+#page-content .home-page .hp-quicklinks-list .link-button:hover,
+.home-page .hp-quicklinks-list .link-button:hover {
+    background: var(--card-hover-bg);
+    border-color: var(--card-border-accent);
+    color: #FF9900;
+}
+
+/* Home page: light mode — column backgrounds and quick links match theme */
+[data-theme="light"] #page-content .home-page .hp-column-left,
+[data-theme="light"] #page-content .home-page .hp-column-center,
+[data-theme="light"] #page-content .home-page .hp-column-right,
+[data-theme="light"] .home-page .hp-column-left,
+[data-theme="light"] .home-page .hp-column-center,
+[data-theme="light"] .home-page .hp-column-right {
+    background: var(--body-bg-alt);
+}
+
+[data-theme="light"] #page-content .home-page .hp-quicklinks-list .link-button,
+[data-theme="light"] .home-page .hp-quicklinks-list .link-button {
+    color: var(--body-text);
+    background: var(--card-bg);
+    border-color: var(--card-border);
+}
+
+[data-theme="light"] #page-content .home-page .hp-quicklinks-list .link-button:hover,
+[data-theme="light"] .home-page .hp-quicklinks-list .link-button:hover {
+    color: #FF9900;
+    background: var(--card-hover-bg);
+    border-color: var(--card-border-accent);
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) #page-content .home-page .hp-column-left,
+    :root:not([data-theme="dark"]) #page-content .home-page .hp-column-center,
+    :root:not([data-theme="dark"]) #page-content .home-page .hp-column-right,
+    :root:not([data-theme="dark"]) .home-page .hp-column-left,
+    :root:not([data-theme="dark"]) .home-page .hp-column-center,
+    :root:not([data-theme="dark"]) .home-page .hp-column-right {
+        background: var(--body-bg-alt);
+    }
+    :root:not([data-theme="dark"]) #page-content .home-page .hp-quicklinks-list .link-button,
+    :root:not([data-theme="dark"]) .home-page .hp-quicklinks-list .link-button {
+        color: var(--body-text);
+        background: var(--card-bg);
+        border-color: var(--card-border);
+    }
+    :root:not([data-theme="dark"]) #page-content .home-page .hp-quicklinks-list .link-button:hover,
+    :root:not([data-theme="dark"]) .home-page .hp-quicklinks-list .link-button:hover {
+        color: #FF9900;
+        background: var(--card-hover-bg);
+        border-color: var(--card-border-accent);
+    }
+}
 
 /* ── Mobile: Collapse to 1 column ── */
 @media (max-width: 1024px) {
@@ -2581,8 +2731,23 @@ a:visited {
     }
     
     .hp-sponsor-card img {
-        max-height: 50px;
+        max-width: 160px;
+        max-height: 60px;
         margin-top: 20px;
+    }
+    
+    .content-wrapper .sponsor-tier-card .hp-sponsor-card {
+        width: 280px;
+        min-width: 280px;
+        max-width: 280px;
+        padding: 20px 16px 16px;
+        min-height: 130px;
+    }
+    
+    .content-wrapper .sponsor-tier-card .hp-sponsor-card img {
+        max-width: 80%;
+        max-height: 80px;
+        margin-top: 16px;
     }
 }
 
@@ -2715,7 +2880,7 @@ a:visited {
 
 .meetup-description {
     color: var(--card-text);
-    font-size: 12px !important;
+    font-size: 14px !important;
     line-height: 1.5;
     margin-bottom: 14px;
     flex: 1;
@@ -2729,7 +2894,7 @@ a:visited {
 
 .meetup-details p {
     color: var(--card-text);
-    font-size: 11px !important;
+    font-size: 14px !important;
     margin: 5px 0;
     line-height: 1.5;
 }
@@ -2770,15 +2935,34 @@ a:visited {
 }
 
 .resource-list a {
-    color: var(--card-text);
+    color: #ffffff;
     text-decoration: none;
-    font-size: 12px !important;
-    transition: color 0.2s ease;
+    font-weight: 600;
+    font-size: 14px !important;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
 }
 
 .resource-list a:hover {
     color: #FF9900;
     text-decoration: underline;
+}
+
+/* Light mode: resource links visible on white cards (match About page) */
+[data-theme="light"] .resource-list a {
+    color: var(--body-text);
+}
+
+[data-theme="light"] .resource-list a:hover {
+    color: #FF9900;
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) .resource-list a {
+        color: var(--body-text);
+    }
+    :root:not([data-theme="dark"]) .resource-list a:hover {
+        color: #FF9900;
+    }
 }
 
 /* ============================================
