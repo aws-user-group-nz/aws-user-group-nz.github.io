@@ -178,6 +178,7 @@ h1.hb {
 /* Title Bar Styles */
 .title-bar {
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     background-color: var(--nav-bg);
     padding: 12px 24px;
@@ -188,9 +189,7 @@ h1.hb {
     right: 0;
     z-index: 1000;
     min-height: 64px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
+    overflow: visible;
     width: 100%;
     box-sizing: border-box;
     gap: 20px;
@@ -198,13 +197,14 @@ h1.hb {
 }
 
 .title-bar-logo {
-    flex: 0 0 520px;
+    flex: 0 1 500px;
     display: flex;
     align-items: center;
     gap: 10px;
-    padding-right: 50px;
-    margin-right: 30px;
+    padding-right: 24px;
+    margin-right: 12px;
     color: #ffffff !important; /* Ensure all text in logo area is white */
+    min-width: 0;
 }
 
 .title-bar-logo img {
@@ -263,23 +263,31 @@ h1.hb {
 }
 
 .title-bar-menu {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     margin-left: 50px;
+    min-width: 0;
 }
 
 .nav-menu-wrapper {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
 }
 
 .nav-menu {
     display: flex;
     gap: 20px;
     align-items: center;
-    flex-shrink: 0;
+    justify-content: flex-end;
+    width: 100%;
+    min-width: 0;
+    flex: 1 1 auto;
 }
 
 .nav-menu a {
@@ -309,6 +317,72 @@ h1.hb {
 .nav-menu a.active {
     background-color: var(--nav-link-active-bg);
     color: var(--nav-link-active-color);
+}
+
+.nav-more {
+    position: relative;
+    margin-left: 4px;
+    flex-shrink: 0;
+}
+
+.nav-more[aria-hidden="true"] {
+    display: none;
+}
+
+.nav-more-toggle {
+    color: var(--nav-link);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    font-size: 15px;
+    font-weight: 500;
+    padding: 8px 10px;
+    border-radius: 6px;
+    line-height: 1;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.nav-more-toggle:hover,
+.nav-more.open .nav-more-toggle {
+    background-color: var(--nav-link-hover-bg);
+    color: var(--nav-link-hover-color);
+    border-color: rgba(255, 153, 0, 0.55);
+}
+
+.nav-more-caret {
+    font-size: 0.8em;
+    display: inline-block;
+    margin-left: 4px;
+}
+
+.nav-more.open .nav-more-caret {
+    transform: rotate(180deg);
+}
+
+.nav-more-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 220px;
+    max-width: min(320px, calc(100vw - 24px));
+    background: var(--nav-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    padding: 6px;
+    z-index: 1010;
+}
+
+.nav-more.open .nav-more-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.nav-more-menu a {
+    display: block;
+    width: 100%;
 }
 
 /* Social Media Icons in Title Bar - Hidden (moved to footer) */
@@ -502,8 +576,18 @@ h1.hb {
 /* Media query to move social icons down on smaller screens */
 @media (max-width: 1200px) {
     .title-bar {
-        flex-wrap: wrap;
-        min-height: auto;
+        flex-wrap: nowrap;
+        min-height: 64px;
+    }
+
+    .title-bar-logo {
+        flex: 0 1 430px;
+        padding-right: 14px;
+        margin-right: 8px;
+    }
+
+    .title-bar-menu {
+        margin-left: 16px;
     }
 }
 
@@ -1529,6 +1613,11 @@ a:visited {
         font-size: 14px;
         padding: 7px 12px;
     }
+
+    .nav-more-toggle {
+        font-size: 14px;
+        padding: 7px 10px;
+    }
     
     .title-bar .social-icons {
         gap: 10px;
@@ -1619,6 +1708,10 @@ a:visited {
     /* Hide desktop menu on mobile */
     .title-bar-menu {
         display: none;
+    }
+
+    .nav-more {
+        display: none !important;
     }
 
     .title-bar-logo {
