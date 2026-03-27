@@ -668,6 +668,48 @@ h1.hb {
     margin-bottom: 30px;
 }
 
+.sponsor-pack-embed {
+    margin-top: 1rem;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 153, 0, 0.25);
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.sponsor-pack-embed-frame {
+    display: block;
+    width: 100%;
+    min-height: 640px;
+    border: 0;
+}
+
+.sponsor-pack-embed-actions {
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+}
+
+.sponsor-pack-embed-fallback {
+    margin-top: 0.35rem;
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .sponsor-pack-embed-frame {
+        height: 58vh;
+        min-height: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sponsor-pack-embed-frame {
+        height: 50vh;
+        min-height: 260px;
+    }
+}
+
 .sponsor-tier-card .hp-sponsors-grid {
     margin-top: 14px;
 }
