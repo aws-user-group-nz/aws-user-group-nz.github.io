@@ -680,13 +680,24 @@ h1.hb {
 .sponsor-pack-embed-frame {
     display: block;
     width: 100%;
-    min-height: 640px;
+    height: clamp(560px, 70vh, 900px);
     border: 0;
 }
 
 .sponsor-pack-embed-actions {
     margin-top: 0.75rem;
     margin-bottom: 0;
+}
+
+.sponsor-pack-embed-link {
+    display: inline-block;
+    color: #FFB84D;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.sponsor-pack-embed-link:hover {
+    color: #FFC978;
 }
 
 .sponsor-pack-embed-fallback {
@@ -697,16 +708,40 @@ h1.hb {
 }
 
 @media (max-width: 768px) {
+    .sponsor-pack-embed {
+        display: none;
+    }
+
     .sponsor-pack-embed-frame {
-        height: 58vh;
-        min-height: 320px;
+        height: 0;
+        min-height: 0;
+    }
+
+    .sponsor-pack-embed-actions {
+        margin-top: 0.9rem;
+    }
+
+    .sponsor-pack-embed-link {
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem 1rem;
+        border: 1px solid rgba(255, 153, 0, 0.45);
+        border-radius: 8px;
+        background: rgba(255, 153, 0, 0.12);
+        text-decoration: none;
+        font-weight: 600;
+        box-sizing: border-box;
+    }
+
+    .sponsor-pack-embed-fallback {
+        margin-top: 0.5rem;
     }
 }
 
 @media (max-width: 480px) {
-    .sponsor-pack-embed-frame {
-        height: 50vh;
-        min-height: 260px;
+    .sponsor-pack-embed-link {
+        font-size: 0.95rem;
+        padding: 0.75rem 0.85rem;
     }
 }
 
