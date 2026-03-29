@@ -748,7 +748,8 @@ h1.hb {
 
 /* Sponsors Section Styles */
 .sponsor-package-card,
-.sponsor-tier-card {
+.sponsor-tier-card,
+.constitution-document-card {
     margin-bottom: 30px;
 }
 
@@ -766,6 +767,11 @@ h1.hb {
     width: 100%;
     height: clamp(560px, 70vh, 900px);
     border: 0;
+}
+
+/* About constitution page: single PDF, taller preview */
+.constitution-pdf-embed-frame {
+    height: clamp(720px, 82vh, 1100px);
 }
 
 .sponsor-pack-embed-actions {
@@ -792,11 +798,13 @@ h1.hb {
 }
 
 @media (max-width: 768px) {
-    .sponsor-pack-embed {
+    .sponsor-pack-embed,
+    .constitution-pdf-embed {
         display: none;
     }
 
-    .sponsor-pack-embed-frame {
+    .sponsor-pack-embed-frame,
+    .constitution-pdf-embed-frame {
         height: 0;
         min-height: 0;
     }
