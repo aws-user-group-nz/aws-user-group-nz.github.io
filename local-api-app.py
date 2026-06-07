@@ -1,22 +1,32 @@
 import json
-from pathlib import Path
+import urllib.error
+import urllib.request
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 import uvicorn
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 
-# Create a FastAPI app
+LIVE_APIS = {
+    "discord": "https://qhh1yazige.execute-api.ap-southeast-2.amazonaws.com",
+    "twitch": "https://zfajs2uwoj.execute-api.ap-southeast-2.amazonaws.com",
+    "youtube": "https://c2e8l3xxy5.execute-api.ap-southeast-2.amazonaws.com",
+}
+
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"])
 
-# Configure CORS
+class DevNoCacheMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request, call_next):
+        response = await call_next(request)
+        path = request.url.path
+        if path.endswith(('.js', '.css', '.html')) or path.startswith('/content/'):
+            response.headers['Cache-Control'] = 'no-store'
+        return response
+
+
+app.add_middleware(DevNoCacheMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -25,75 +35,32 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create test data if it doesn't exist
-def ensure_test_data():
-    test_data = {
-        "discordEvents": [
-            {
-                "id": "test-discord-1",
-                "name": "Test Discord Event 1",
-                "description": "This is a test Discord event for local development",
-                "scheduled_start_time": "2024-12-20T09:00:00.000Z",
-                "scheduled_end_time": "2024-12-20T10:00:00.000Z",
-                "creator": {
-                    "global_name": "Test User"
-                },
-                "recurrence_rule": None
-            },
-            {
-                "id": "test-discord-2",
-                "name": "Test Discord Event 2 (Recurring)",
-                "description": "This is a recurring test Discord event",
-                "scheduled_start_time": "2024-12-22T14:00:00.000Z",
-                "scheduled_end_time": "2024-12-22T15:00:00.000Z",
-                "creator": {
-                    "global_name": "Test User"
-                },
-                "recurrence_rule": {
-                    "interval": 1,
-                    "start": "2024-12-22T14:00:00.000Z"
-                }
-            }
-        ],
-        "twitchEvents": [
-            {
-                "id": "test-twitch-1",
-                "title": "Test Twitch Stream",
-                "description": "This is a test Twitch event for local development",
-                "scheduled_start_time": "2024-12-21T16:00:00.000Z",
-                "platform": "twitch",
-                "category": {
-                    "name": "AWS"
-                }
-            }
-        ]
-    }
-    
-    # Create test-data directory if it doesn't exist
-    Path("test-data").mkdir(exist_ok=True)
-    
-    # Write test data to file
-    with open("test-data/local-events.json", "w") as f:
-        json.dump(test_data, f, indent=2)
 
-# Ensure test data exists before starting server
-ensure_test_data()
+@app.get("/api/live/{source}")
+async def proxy_live_api(source: str):
+    url = LIVE_APIS.get(source)
+    if not url:
+        return JSONResponse(status_code=404, content={"error": f"Unknown source: {source}"})
 
-# Define routes before mounting static files
-@app.get("/api/events")
-async def get_events():
     try:
-        with open("test-data/local-events.json") as f:
-            events = json.load(f)
-        return JSONResponse(content=events)
+        request = urllib.request.Request(url, headers={"Accept": "application/json"})
+        with urllib.request.urlopen(request, timeout=30) as response:
+            data = json.loads(response.read().decode())
+        return JSONResponse(content=data)
+    except urllib.error.HTTPError as e:
+        body = e.read().decode()
+        try:
+            payload = json.loads(body)
+        except json.JSONDecodeError:
+            payload = {"error": body or str(e)}
+        return JSONResponse(status_code=e.code, content=payload)
     except Exception as e:
-        print(f"Error reading events file: {e}")
-        return JSONResponse(content={"discordEvents": [], "twitchEvents": []})
+        return JSONResponse(status_code=502, content={"error": str(e)})
 
-# Mount static files after defining routes
+
 app.mount("/", StaticFiles(directory=".", html=True), name="static")
 
 if __name__ == "__main__":
     print("Server starting at http://localhost:6969")
-    print("API endpoint available at http://localhost:6969/api/events")
+    print("Live API proxy: http://localhost:6969/api/live/{discord|twitch|youtube}")
     uvicorn.run(app, host="localhost", port=6969)

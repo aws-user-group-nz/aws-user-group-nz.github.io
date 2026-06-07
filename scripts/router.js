@@ -65,7 +65,10 @@ class Router {
         
         if (contentFile) {
             try {
-                const response = await fetch(contentFile);
+                const fetchOpts = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+                    ? { cache: 'no-cache' }
+                    : {};
+                const response = await fetch(contentFile, fetchOpts);
                 if (response.ok) {
                     const content = await response.text();
                     this.contentContainer.innerHTML = content;
@@ -85,7 +88,10 @@ class Router {
             const homeContent = this.routes['/home'];
             if (homeContent) {
                 try {
-                    const response = await fetch(homeContent);
+                    const fetchOpts = ['localhost', '127.0.0.1'].includes(window.location.hostname)
+                        ? { cache: 'no-cache' }
+                        : {};
+                    const response = await fetch(homeContent, fetchOpts);
                     const content = await response.text();
                     this.contentContainer.innerHTML = content;
                     this.updateActiveNav('/home');

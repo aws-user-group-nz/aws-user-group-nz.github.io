@@ -1,10 +1,17 @@
 // Calendar will be initialized by router when home content loads
 // No auto-initialization needed
 
+const YOUTUBE_API_URL = 'https://c2e8l3xxy5.execute-api.ap-southeast-2.amazonaws.com';
+
+const EVENT_API = {
+    discord: 'https://qhh1yazige.execute-api.ap-southeast-2.amazonaws.com',
+    twitch: 'https://zfajs2uwoj.execute-api.ap-southeast-2.amazonaws.com',
+    youtube: YOUTUBE_API_URL,
+};
+
 class Calendar {
     constructor() {
-        this.isLocalDev = false; // Set to true for local development
-
+        this.isLocalDev = ['localhost', '127.0.0.1'].includes(window.location.hostname);
         this.events = [];
         this.expandedEvents = null;
 
@@ -18,40 +25,32 @@ class Calendar {
 
         this.discordEvents = [];
         this.twitchEvents = [];
+        this.youtubeEvents = [];
         this.meetupEvents = [];
         this.fetchAllEvents();
     }
 
-    async fetchAllEvents() {
+    getEventApiUrl(source) {
         if (this.isLocalDev) {
-            await this.fetchLocalTestEvents();
-        } else {
-            await Promise.all([
-                this.fetchDiscordEvents(),
-                this.fetchAWSTwitchChannelEvents()
-            ]);
+            return `http://localhost:6969/api/live/${source}`;
         }
+        return EVENT_API[source];
+    }
+
+    async fetchAllEvents() {
+        await Promise.all([
+            this.fetchDiscordEvents(),
+            this.fetchAWSTwitchChannelEvents(),
+            this.fetchYouTubeEvents(),
+        ]);
         console.log('Discord events:', this.discordEvents.length);
         console.log('Twitch events:', this.twitchEvents.length);
+        console.log('YouTube events:', this.youtubeEvents.length);
         console.log('Meetup events:', this.meetupEvents.length);
         await this.generateAllEvents();
         this.renderCalendar();
     }
 
-    // Add this new method for local testing
-    async fetchLocalTestEvents() {
-        try {
-            const response = await fetch('http://localhost:6969/api/events');
-            const data = await response.json();
-            this.discordEvents = data.discordEvents || [];
-            this.twitchEvents = data.twitchEvents || [];
-            this.meetupEvents = data.meetupEvents || [];
-        } catch (error) {
-            console.error('Error loading local test e:', error);
-            this.showError('Failed to load local test events. Is the local-api-app.py running? ');
-        }
-    }
-    
     // Initialize error handling for modal close functionality
     initializeErrorHandling() {
         // Set up modal error handling
@@ -115,7 +114,7 @@ class Calendar {
 
     async fetchDiscordEvents() {
         try {
-            const response = await fetch('https://qhh1yazige.execute-api.ap-southeast-2.amazonaws.com');
+            const response = await fetch(this.getEventApiUrl('discord'));
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -145,7 +144,7 @@ class Calendar {
 
     async fetchAWSTwitchChannelEvents() {
         try {
-            const response = await fetch('https://zfajs2uwoj.execute-api.ap-southeast-2.amazonaws.com');
+            const response = await fetch(this.getEventApiUrl('twitch'));
 
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -172,19 +171,53 @@ class Calendar {
         }
     }
 
+    async fetchYouTubeEvents() {
+        if (!YOUTUBE_API_URL) {
+            this.youtubeEvents = [];
+            return;
+        }
+
+        try {
+            const response = await fetch(this.getEventApiUrl('youtube'));
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            if (!Array.isArray(data)) {
+                throw new Error('Invalid data format received from server');
+            }
+
+            this.youtubeEvents = data;
+        } catch (error) {
+            console.error('Error fetching YouTube events:', error);
+            this.youtubeEvents = [];
+
+            let userMessage = 'Unable to load YouTube calendar events. ';
+            if (error.message.includes('HTTP error')) {
+                userMessage += 'The server is not responding. Please try again later.';
+            } else if (error.message.includes('Invalid data')) {
+                userMessage += 'The server returned unexpected data.';
+            }
+            this.showError(userMessage);
+        }
+    }
+
     // generate all events helps to expand all the recurrence of events for cal rendering...
     async generateAllEvents() {
         const expandedEvents = [];
 
-        // Combine Discord and Twitch events
-        const allEvents = [...this.discordEvents, ...this.twitchEvents, ...this.meetupEvents];
+        // Combine Discord, Twitch, YouTube, and Meetup events
+        const allEvents = [...this.discordEvents, ...this.twitchEvents, ...this.youtubeEvents, ...this.meetupEvents];
         
         console.log('Combined events before processing:', allEvents);
 
         // main loop
         for (const event of allEvents) {
             console.log('Processing event:', event);
-            if (!event.recurrence_rule) {
+            if (!event.recurrence_rule || event.platform !== 'discord') {
                 console.log('No recurrence rule, adding single event');
                 expandedEvents.push(event);
                 continue;
@@ -299,14 +332,18 @@ class Calendar {
                     if (a.platform === b.platform) {
                         return new Date(a.scheduled_start_time) - new Date(b.scheduled_start_time);
                     }
-                    return a.platform === 'discord' ? -1 : 1;  // Ensures Discord is at the top
+                    if (a.platform === 'discord') return -1;
+                    if (b.platform === 'discord') return 1;
+                    if (a.platform === 'youtube') return -1;
+                    if (b.platform === 'youtube') return 1;
+                    return 0;
                 });
                 const maxEventsPerDay = 5;
                 const visibleEvents = dayEvents.slice(0, maxEventsPerDay);
 
                 visibleEvents.forEach(event => {
                     const eventIndicator = document.createElement('div');
-                    eventIndicator.className = `event-indicator ${event.platform === 'twitch' ? 'twitch-event' : event.platform === 'discord' ? 'discord-event' : event.platform === 'meetup' ? 'usergroup-event' : ''}`;
+                    eventIndicator.className = `event-indicator ${event.platform === 'twitch' ? 'twitch-event' : event.platform === 'discord' ? 'discord-event' : event.platform === 'youtube' ? 'youtube-event' : event.platform === 'meetup' ? 'usergroup-event' : ''}`;
 
                     // Add platform-specific styling
                     if (event.platform === 'twitch') {
@@ -319,13 +356,11 @@ class Calendar {
 
                     // Create a container for the event name and user count
                     eventIndicator.innerHTML = `
-                        <span class="event-name">
-                            ${truncatedName}
-
-                        ${event.platform !== 'twitch' ? `
+                        <span class="event-name">${truncatedName}</span>
+                        ${event.platform === 'discord' ? `
                             <span class="user-count">
                                 <i class="fas fa-user"></i> ${event.user_count || 0}
-
+                            </span>
                         ` : ''}
                     `;
 
@@ -411,6 +446,10 @@ class Calendar {
                     eventElement.classList.add('discord-event');
                 }
                 else
+                if(event.platform === 'youtube') {
+                    eventElement.classList.add('youtube-event');
+                }
+                else
                 if(event.platform === 'meetup') {
                     eventElement.classList.add('usergroup-event');
                 }
@@ -462,8 +501,16 @@ class Calendar {
             if (event.scheduled_end_time) {
                 addDetailRow('End Time', new Date(event.scheduled_end_time).toLocaleString('en-NZ'));
             }
+        } else if (event.platform === 'youtube') {
+            addDetailRow('Channel', event.channel_label || 'YouTube');
+            addDetailRow('Description', event.description || 'No description provided');
+            addDetailRow('Start Time', new Date(event.scheduled_start_time).toLocaleString('en-NZ'));
+            if (event.scheduled_end_time) {
+                addDetailRow('End Time', new Date(event.scheduled_end_time).toLocaleString('en-NZ'));
+            }
         } else {
-            addDetailRow('Presented by ', event.creator.username);
+            const creatorName = event.creator?.username || event.creator?.global_name || 'Unknown';
+            addDetailRow('Presented by ', creatorName);
             addDetailRow('Description', event.description || 'No description provided');
             addDetailRow('Time', new Date(event.scheduled_start_time).toLocaleString('en-NZ'));
 
@@ -477,16 +524,9 @@ class Calendar {
         // Image handling
         const imageContainer = document.getElementById('eventImage');
         if (event.platform ==='discord' && event?.id && event?.imagehash) {
-            if(this.isLocalDev){
-                const imageUrl = `${event.imagehash}`;
-                imageContainer.style.display = 'block';
-                imageContainer.innerHTML = `<img src="${imageUrl}" alt="${event.name} Image" class="event-image"/>`;
-            }
-            else{
-                const imageUrl = `https://cdn.discordapp.com/guild-events/${event.id}/${event.imagehash}.png?size=512`;
-                imageContainer.style.display = 'block';
-                imageContainer.innerHTML = `<img src="${imageUrl}" alt="${event.name} Image" class="event-image"/>`;
-            }
+            const imageUrl = `https://cdn.discordapp.com/guild-events/${event.id}/${event.imagehash}.png?size=512`;
+            imageContainer.style.display = 'block';
+            imageContainer.innerHTML = `<img src="${imageUrl}" alt="${event.name} Image" class="event-image"/>`;
         } else {
             imageContainer.style.display = 'none';
             imageContainer.innerHTML = '';
@@ -526,6 +566,13 @@ class Calendar {
                 <a href="https://twitch.tv/aws"
                     target="_blank" class="twitch-link">
                     Watch on Twitch
+                </a>
+            `;
+        } else if (event.platform === 'youtube') {
+            discordLinksDiv.innerHTML = `
+                <a href="${event.url || 'https://www.youtube.com/'}"
+                    target="_blank" class="youtube-link">
+                    Watch on YouTube
                 </a>
             `;
         } else {

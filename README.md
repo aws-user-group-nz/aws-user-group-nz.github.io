@@ -21,21 +21,56 @@ npx http-server -p 8000
 
 Then open your browser to: http://localhost:8000
 
-### Testing with Local API
+### Testing the events calendar
 
-For testing with local event data, edit `scripts/cal_script.js` and change:
+The calendar supports three modes via `localDevMode` in `scripts/cal_script.js`:
+
+| Mode | Setting | Use case |
+|------|---------|----------|
+| Production | `false` (default) | Live Discord, Twitch, and YouTube Lambdas |
+| Mock | `'mock'` | UI testing with fake data — no API keys |
+| Live YouTube local | `'live'` | Prod Discord/Twitch + local YouTube API on port 8083 |
+
+**Mock mode** — edit `scripts/cal_script.js`:
+
 ```javascript
-this.isLocalDev = false;
-```
-to:
-```javascript
-this.isLocalDev = true;
+this.localDevMode = 'mock';
 ```
 
-Then run the local API server:
+Then run (first time: create venv and install deps):
+
 ```bash
-python local-api-app.py
+python3 -m venv .venv
+.venv/bin/pip install -r requirements-dev.txt
+.venv/bin/python local-api-app.py
 ```
+
+Open http://localhost:6969#/events — serves the site and mock `/api/events` (includes `youtubeEvents`).
+
+**Live YouTube local** — run the YouTube API from `aws-user-group-nz.github.io-aws`:
+
+```bash
+cd ../aws-user-group-nz.github.io-aws/youtube-api
+cp .env.example .env.local   # add YOUTUBE_API_KEY
+./local-server.sh              # http://localhost:8083
+```
+
+Set in `scripts/cal_script.js`:
+
+```javascript
+this.localDevMode = 'live';
+```
+
+Serve the site separately:
+
+```bash
+python -m http.server 8000
+```
+
+Open http://localhost:8000#/events
+
+**Production YouTube** — after deploying `youtube-api`, set `EVENT_API.prod.youtube` in `cal_script.js` to the API Gateway URL (see `youtube-api/DEPLOY.md` in the APIs repo).
+
 
 ## Architecture
 
